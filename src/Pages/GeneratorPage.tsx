@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { VscSymbolNamespace, VscOutput, VscRunAll, VscTrash } from 'react-icons/vsc';
+import { VscOutput, VscRunAll, VscTrash } from 'react-icons/vsc';
+import './Generatorpage.css';
 
-// Definieren des Typs für die Style-Objekte
-type StyleMap = { [key: string]: React.CSSProperties };
 
 const GeneratorPage: React.FC = () => {
   // TypeScript State-Typisierung: useState<string>
@@ -16,6 +15,7 @@ class Calculator {
     return a + b;
   }
   
+
   multiply(a, b) {
     return a * b;
   }
@@ -38,98 +38,23 @@ describe('Calculator', () => {
       setCode('');
   }
 
-  const styles: StyleMap = {
-    mainContent: {
-      flex: 1, 
-      padding: '40px 40px',
-      display: 'flex',
-      gap: '20px', 
-      width: '100%',
-    },
-    panel: {
-      flex: 1,
-      backgroundColor: '#2D2D2D', 
-      borderRadius: '8px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '400px',
-    },
-    panelHeader: {
-      padding: '15px 20px',
-      borderBottom: '1px solid #3C3C3C',
-      fontSize: '18px',
-      fontWeight: 'bold',
-      display: 'flex',
-      alignItems: 'center',
-    },
-    textArea: {
-      flex: 1,
-      padding: '15px 20px',
-      backgroundColor: '#2D2D2D',
-      color: '#FFFFFF',
-      border: 'none',
-      resize: 'none',
-      fontFamily: 'monospace',
-      fontSize: '14px',
-      borderRadius: '0 0 8px 8px',
-      outline: 'none',
-    },
-    codeInputContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-    },
-    buttonContainer: {
-      padding: '15px 20px',
-      borderTop: '1px solid #3C3C3C',
-      display: 'flex',
-      gap: '10px',
-      alignItems: 'center',
-    },
-    generateButton: {
-      backgroundColor: '#6A5ACD', 
-      color: 'white',
-      border: 'none',
-      padding: '10px 20px',
-      borderRadius: '6px',
-      cursor: 'pointer',
-      fontSize: '16px',
-      fontWeight: 'bold',
-      display: 'flex',
-      alignItems: 'center',
-      transition: 'background-color 0.3s',
-      flexGrow: 1, // Nimmt den meisten Platz ein
-      justifyContent: 'center',
-    } as React.CSSProperties, // Explizites Typing für kompliziertere Styles
-    deleteButton: {
-        backgroundColor: 'transparent',
-        color: '#B0B0B0',
-        border: 'none',
-        fontSize: '20px',
-        cursor: 'pointer',
-        padding: '10px',
-    }
-  };
-
   return (
-    <main style={styles.mainContent}>
+    <main className='main-content'>
       {/* Linke Spalte: Code-Eingabe */}
-      <div style={styles.panel}>
-        <div style={{ ...styles.panelHeader, color: '#FFD700' }}>
-          <VscSymbolNamespace style={{ marginRight: '10px' }} />
+      <div className='panel'>
+        <div className='panel-header code'>
           Code Eingabe
         </div>
-        <div style={styles.codeInputContainer}>
+        <div className='code-input-container'>
           <textarea
-            style={styles.textArea}
+            className='text-area'
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="Geben Sie hier Ihre Methoden, Funktionen oder Klassen ein..."
           />
-          <div style={styles.buttonContainer}>
+          <div className='button-container'>
             <button
-              style={styles.generateButton}
+              className='generate-button'
               onClick={handleGenerateTests}
             >
               <VscRunAll style={{ marginRight: '8px' }} />
@@ -137,7 +62,7 @@ describe('Calculator', () => {
             </button>
             {/* Löschen-Button */}
             <button 
-                style={styles.deleteButton} 
+                className='delete-button'
                 onClick={handleClearCode} 
                 title="Eingabe löschen"
             >
@@ -148,13 +73,13 @@ describe('Calculator', () => {
       </div>
 
       {/* Rechte Spalte: Generierte Unit Tests */}
-      <div style={styles.panel}>
-        <div style={{ ...styles.panelHeader, color: '#4682B4' }}>
+      <div className='panel'>
+        <div className='paneld-header output'>
           <VscOutput style={{ marginRight: '10px' }} />
           Generierte Unit Tests
         </div>
         <textarea
-          style={styles.textArea}
+          className='text-area'
           value={generatedTests}
           readOnly
           placeholder="Hier erscheinen die generierten Unit Tests..."
@@ -165,3 +90,4 @@ describe('Calculator', () => {
 };
 
 export default GeneratorPage;
+

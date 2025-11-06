@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 // Annahme: Du nutzt z.B. react-icons, daher der Import der Typen
 import { IconContext } from 'react-icons'; 
 import { VscCode, VscBeaker } from 'react-icons/vsc'; 
@@ -39,6 +39,7 @@ const Header: React.FC = () => {
       </p>
     </header>
   );
-};
+}; 
 
-export default Header;
+export default Header; 
+
