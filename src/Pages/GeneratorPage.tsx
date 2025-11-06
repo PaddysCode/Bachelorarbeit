@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { VscOutput, VscRunAll, VscTrash } from 'react-icons/vsc';
 import './Generatorpage.css';
+import { sendPromptToGPT } from '../API/ModellsAPI';
 
 
 const GeneratorPage: React.FC = () => {
-  // TypeScript State-Typisierung: useState<string>
+  
   const [code, setCode] = useState<string>(`Beispiel:
 function calculateSum(a, b) {
   return a + b;
@@ -20,19 +21,29 @@ class Calculator {
     return a * b;
   }
 }`);
+
+
+
   const [generatedTests, setGeneratedTests] = useState<string>('Hier erscheinen die generierten Unit Tests...');
 
-  const handleGenerateTests = () => {
-    // Die Logik zur Generierung der Tests würde hier stehen
-    console.log('Tests generieren für:', code);
-    setGeneratedTests(`// Tests generiert am ${new Date().toLocaleTimeString()}
-// Beispiel-Test
-describe('Calculator', () => {
-    test('add(1, 2) should return 3', () => {
-        expect(new Calculator().add(1, 2)).toBe(3);
-    });
-});`);
+  const handleGenerateTests = async () => {
+
+    try {
+
+      setGeneratedTests('Generiere Tests, bitte warten...');
+
+      const tests = await sendPromptToGPT(code);
+    
+      console.log('Tests generieren für:', code);
+      setGeneratedTests(tests || 'Keine Tests generiert.');
+    } 
+    catch (error) {
+      console.error('Fehler beim Generieren der Tests:', error);
+      setGeneratedTests(`Fehler beim Generieren der Tests: ${error}`);
+    }
   };
+
+
 
   const handleClearCode = () => {
       setCode('');
